@@ -5,34 +5,36 @@
 {% block body %}
 <div class="content">
     <h1>Task Manager</h1>
+    <form id="contentform" method="post">
+        <input type="text" name="content" id="content">
+        <input type="submit" value = "Add your Task" id = "button">
+    </form>
+</div>
     {% if quotes|length <1 %}
 
     <h2>There are no tasks!</h2>
 
     {% else %}
 
-    <table>
-        <tr>
-            <th>Task</th>
-            <th>Added</th>
-            <th>Actions</th>
-        </tr>
-        {%for x in quotes%}
-        <tr>
-            <td>{{ x.content }}</td>
-            <td>{{ x.date_created.date() }}</td>
-            <td>
-                <a href="/update/{{x.id}}">Update</a>
-                <br>
-                <a href="/delete/{{x.id}}">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <div class="container">
+        <div class="portfolio-items-wrapper">
+            {%for x in quotes%}
+            <div class="portfolio-item-wrapper">
+                <div
+                  class="portfolio-img-background"
+                  style="background-image: url({{ url_for('static', filename = 'paper.png') }})"
+                ></div>
+                <div class="img-text-wrapper">
+                    {{ x.content }}
+                    <br>
+                    {{ x.date_created.date() }}
+                    <a href="/update/{{x.id}}">Update</a>
+                    <br>
+                    <a href="/delete/{{x.id}}">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
     {% endif %}
-    <form id="contentform">
-        <input type="text" name="content" id="content">
-        <input type="submit" value = "Add your Task" id = "button">
-    </form>
-</div>
 {% endblock %}
